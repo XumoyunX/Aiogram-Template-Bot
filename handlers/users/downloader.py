@@ -10,7 +10,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.builtin import CallbackQuery
 from pytube import YouTube
 # import telebot;
-
+from .start import check_user
 
 from.youtube_data import ikn_button
 
@@ -19,13 +19,13 @@ from.youtube_data import ikn_button
 @dp.message_handler(Text(startswith='https://www.tiktok.com'))
 async def test(message:types.Message):
     natija = tk(message.text)
-    qushiq = natija['music']
-    btn = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="Musiqasini yuklab olish", url="{}".format(qushiq))]
-        ]
-    )
+    # qushiq = natija['music']
+    # btn = InlineKeyboardMarkup(inline_keyboard=[
+    #     [InlineKeyboardButton(text="Musiqasini yuklab olish", url="{}".format(qushiq))]
+    #     ]
+    # )
 
-    await message.answer_audio(natija['video'], reply_markup=btn)
+    await message.answer_audio(natija['video'])
 
 # @dp.callback_query_handler(Text(startswith='🎵'))
 # async  def test2(call: CallbackQuery):
@@ -34,7 +34,7 @@ async def test(message:types.Message):
 #     await call.message.answer_audio(data)
 
 
-
+@check_user
 @dp.message_handler(Text(startswith='https://www.instagram.com'))
 async def send_media(message:types.Message):
     link1 = message.text
@@ -59,17 +59,19 @@ async def send_media(message:types.Message):
 
 
 
-
-
 @dp.message_handler()
 async def test_mesage(message:types.Message):
     chat_id = message.chat.id
     url = message.text
     yt = YouTube(url)
+
     if message.text.startswith == 'https://youtu.be/' or 'https"//www.youtube.com/':
         await bot.send_message(chat_id, f"Kutib tuting* : *{yt.title}*\n"
                                         f"*Kanal *: [{yt.author}]({yt.channel_url})")
         await download_youtube_video(url, message, bot)
+
+
+
 
 
 
@@ -85,30 +87,31 @@ async def download_youtube_video(url, message, bot):
         os.remove(f"{message.chat.id}/{message.chat.id}_{yt.title}")
 
 
-@dp.message_handler(Text(startswith="http"))
-async def get_audio(message:types.Message):
-    print("pkkk")
-    link = message.text
-    from io import BytesIO
-    buffer=BytesIO()
-    url=YouTube(link)
-    if url.check_availability() is None:
-        audio=url.streams.get_audio_only()
-        audio.stream_to_buffer(buffer=buffer)
-        buffer.seek(0)
-        filname=url.title
-        await message.answer_audio(audio=buffer, caption=filname)
-    else:
-        await message.answer("Error")
-        print("ok")
+# @check_user
+# @dp.message_handler(Text(startswith="http"))
+# async def get_audio(message:types.Message):
+#     print("pkkk")
+#     link = message.text
+#     from io import BytesIO
+#     buffer=BytesIO()
+#     url=YouTube(link)
+#     if url.check_availability() is None:
+#         audio=url.streams.get_audio_only()
+#         audio.stream_to_buffer(buffer=buffer)
+#         buffer.seek(0)
+#         filname=url.title
+#         await message.answer_audio(audio=buffer, caption=filname)
+#     else:
+#         await message.answer("Error")
+#         print("ok")
 
 
 
 
-@dp.callback_query_handler()
-async def callabeck_query(call):
-    if call.data == 'btn_1':
-        pass 
+# @dp.callback_query_handler()
+# async def callabeck_query(call):
+#     if call.data == 'btn_1':
+#         pass
 
 
 
