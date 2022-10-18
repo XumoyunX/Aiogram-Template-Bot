@@ -17,6 +17,7 @@ from.youtube_data import ikn_button
 
 
 @dp.message_handler(Text(startswith='https://www.tiktok.com'))
+@check_user
 async def test(message:types.Message):
     natija = tk(message.text)
     # qushiq = natija['music']
@@ -34,8 +35,9 @@ async def test(message:types.Message):
 #     await call.message.answer_audio(data)
 
 
-@check_user
+
 @dp.message_handler(Text(startswith='https://www.instagram.com'))
+@check_user
 async def send_media(message:types.Message):
     link1 = message.text
     data = instadownloader(link1=link1)
@@ -80,10 +82,10 @@ async def download_youtube_video(url, message, bot):
     stream = yt.streams.filter(progressive=True, file_extension='mp4')
     stream.get_highest_resolution().download(f'{message.chat.id}', f'{message.chat.id}_{yt.title}')
     with open(f"{message.chat.id}/{message.chat.id}_{yt.title}", "rb") as video:
-        btn = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="Musiqasini yuklab olish", callback_data = "btn_1")]
-        ])
-        await bot.send_video(message.chat.id, video, caption="* Video *", reply_markup=btn)
+        # btn = InlineKeyboardMarkup(inline_keyboard=[
+        #         [InlineKeyboardButton(text="Musiqasini yuklab olish", callback_data = "btn_1")]
+        # ])
+        await bot.send_video(message.chat.id, video, caption="* Video *")
         os.remove(f"{message.chat.id}/{message.chat.id}_{yt.title}")
 
 
