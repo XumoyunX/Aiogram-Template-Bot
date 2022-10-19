@@ -12,7 +12,7 @@ from pytube import YouTube
 # import telebot;
 from .start import check_user
 
-from.youtube_data import ikn_button
+# from utils.notify_admins import btn
 
 
 
@@ -61,16 +61,16 @@ async def send_media(message:types.Message):
 
 
 
-@dp.message_handler()
-async def test_mesage(message:types.Message):
-    chat_id = message.chat.id
-    url = message.text
-    yt = YouTube(url)
-
-    if message.text.startswith == 'https://youtu.be/' or 'https"//www.youtube.com/':
-        await bot.send_message(chat_id, f"Kutib tuting* : *{yt.title}*\n"
-                                        f"*Kanal *: [{yt.author}]({yt.channel_url})")
-        await download_youtube_video(url, message, bot)
+# @dp.message_handler()
+# async def test_mesage(message:types.Message):
+#     chat_id = message.chat.id
+#     url = message.text
+#     yt = YouTube(url)
+#
+#     if message.text.startswith == 'https://youtu.be/' or 'https"//www.youtube.com/':
+#         await bot.send_message(chat_id, f"Kutib tuting* : *{yt.title}*\n"
+#                                         f"*Kanal *: [{yt.author}]({yt.channel_url})")
+#         await download_youtube_video(url, message, bot)
 
 
 
@@ -114,6 +114,10 @@ async def download_youtube_video(url, message, bot):
 # async def callabeck_query(call):
 #     if call.data == 'btn_1':
 #         pass
+
+
+
+
 
 
 

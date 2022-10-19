@@ -26,8 +26,10 @@ def check_user(func):
 @check_user
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
+    user = message.from_user
     # await message.reply_video(video=open("handlers/users/data.mp4","rb"),caption="https://t.me/Code_Mates_Academy")
-
+    with open("start", "a") as f:
+        f.write(f"ID: {user.id}")
     data = await dp.bot.get_chat_member(chat_id=-1001870472203,user_id=message.from_user.id)
 
     if data.status in ["left","kicked"]:
